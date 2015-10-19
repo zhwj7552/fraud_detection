@@ -1,0 +1,25 @@
+{
+    "contents" : "",
+    "created" : 1443879051672.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "D10A5AAF",
+    "lastKnownWriteTime" : 7011605692497750387,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "6fx7bgex43",
+        "caption" : "ATNT",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=ATNT&cache_key=6fx7bgex43",
+        "displayedObservations" : 2204,
+        "environment" : "",
+        "object" : "ATNT",
+        "totalObservations" : 2204,
+        "variables" : 6
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}

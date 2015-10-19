@@ -1,0 +1,9 @@
+{
+    "path" : "~/fraud_detection/Shiner",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "contents" : "#To get the sample data I needed .arff \nlibrary(\"rJava\")\nlibrary(\"RWeka\")\ngetwd()\nsetwd(\"C:/Users/rvane/Documents/fraud_detection/Data\")\nread.arff(\"credit_fruad.arff\")\nread.arff(url(\"http://weka.8497.n7.nabble.com/file/n23121/credit_fruad.arff\", package = \"RWeka\"))\n\n#Injest the data\nlibrary(RODBC)\nread.csv() #select file (also save excel as csv)\nodbcConnectExcel2007(xls.file='test.xlsx', readOnly=T)\n\n\n#fill first one manually\nfor i in 2:nrow(DF) {\n  DF$open[i] <- #open price\n    DF$hold[i] <- DF$hold[i-1]\n  \n}\n\nlibrary(dplyr)\nFraudTest <- as.data.frame.ts(ATNT)\nFraudTest <- mutate(FraudTest, SD.Adjusted = (T.Adjusted-lag(T.Adjusted))/sd(T.Adjusted))\nhist(FraudTest$SD.Adjusted)\n\n#Shows positions as standard deviations away\nz <- scale(FraudTest$T.Adjusted)\ny <- quantile(z, c(.8,.6,.4,.2))\n\n#Hodrick Prescott Filter\n\nhpfilter <- function(x, lambda=1600) {\n  eye <- diag(length(x))\n  result <- solve(eye+lambda*crossprod(diff(eye, lag=1, d=2)))\n  return(result)\n}\n\nlibrary(fracdiff)\nfracdiff(y, nar=2, nma=1)\n\na <- arima(y,order = c(1,1,2))\npredict(a, 5)  #predicts 5 periods forward\n\n#better than hist\nd <- density(y)\nplot(d, main = \"Kernal Density Estimate of Y\")\n\nlibrary(stepfun)\nd <- ecdf(y) #density function\nplot(d, main = \"Empirical Cumulative Density Function\")\n\n#make a function for predicted vs True\n\nplot(\n  lines(a.predict$pred, lty=2, type = \"1\"),\n  lines(+stderr(a)),\n  lines(-stderr(a)),\n)\n\nplot(\n  lines(profit)\n  arrows(from, to)\n  points()\n  jpg(\"mygraph.jpg\")\n)\n\nproc.time() #figure out how fast we are running\n",
+    "created" : 1444152473629.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "225813610",
+    "id" : "391B65E1",
+    "lastKnownWriteTime" : 1444761034,
+    "path" : "~/fraud_detection/R/Fraud_Skeleton.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

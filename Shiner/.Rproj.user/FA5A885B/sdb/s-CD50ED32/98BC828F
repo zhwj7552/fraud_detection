@@ -1,0 +1,25 @@
+{
+    "contents" : "",
+    "created" : 1444876564693.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "98BC828F",
+    "lastKnownWriteTime" : 21392300099829876,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "qusy21q932",
+        "caption" : "FraudTest",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=FraudTest&cache_key=qusy21q932",
+        "displayedObservations" : 2204,
+        "environment" : "",
+        "object" : "FraudTest",
+        "totalObservations" : 2204,
+        "variables" : 7
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}

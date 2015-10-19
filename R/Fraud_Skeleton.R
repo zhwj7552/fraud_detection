@@ -1,3 +1,11 @@
+#To get the sample data I needed .arff 
+library("rJava")
+library("RWeka")
+getwd()
+setwd("C:/Users/rvane/Documents/fraud_detection/Data")
+read.arff("credit_fruad.arff")
+read.arff(url("http://weka.8497.n7.nabble.com/file/n23121/credit_fruad.arff", package = "RWeka"))
+
 #Injest the data
 library(RODBC)
 read.csv() #select file (also save excel as csv)
@@ -10,6 +18,12 @@ for i in 2:nrow(DF) {
     DF$hold[i] <- DF$hold[i-1]
   
 }
+
+library(dplyr)
+FraudTest <- as.data.frame.ts(ATNT)
+FraudTest <- mutate(FraudTest, SD.Adjusted = (T.Adjusted-lag(T.Adjusted))/sd(T.Adjusted))
+hist(FraudTest$SD.Adjusted)
+
 
 #Hodrick Prescott Filter
 

@@ -1,0 +1,17 @@
+{
+    "contents" : "#' @title Search for US Census data sets\n#'\n#' @description\n#' \\code{UScensusSearch} looks across all published US Census data sets\n#' and provides a list for coresponding metadata calls\n#'\n#' @details\n#' This code is used to pull data from the US Census.\n#' \n#' \n#' @param Search string\n#' @param data a data frame containing the variables in the model.\n#' @param exact logical. If \\code{TRUE}, calculate exact Wilcoxon tests.\n#' @param sort logical. If \\code{TRUE}, sort groups by median dependent variable values.\n#' @param method method for correcting p-values for multiple comparisons.\n#' @export\n#' @return a list elements containing the search string\n#' \\item{title}{Title of the Dataset}\n#' \\item{Description}{The long description of the dataset describing what it contains}\n#' \\item{Vintage}{They year in which the data was published}\n#' \\item{Dataset_Name}{The thing you need to put into the getCensus() funtion}\n#' \\item{Geography}{a list of available geographies for the dataset}\n#' \\item{Variables}{a list of available variables for the dataset}\n#' \\item{Tags}{a list of available metadata tags for the dataset} \n#' @author SSgt Vane <marine1vane@@gmail.com>\n#' @examples\n#' myDataSearch <- UScensusSearch(\"County Business Patterns\")\n#' View(myDataSearch)\n\noneway <- function(formula, data, exact=FALSE, sort=TRUE,               \n                   method=c(\"holm\", \"hochberg\", \"hommel\", \"bonferroni\",      \n                            \"BH\", \"BY\", \"fdr\", \"none\")){\n  \n  if (missing(formula) || class(formula) != \"formula\" ||\n        length(all.vars(formula)) != 2)                                   \n    stop(\"'formula' is missing or incorrect\")\n  \n  method <- match.arg(method)\n  \n  df <- model.frame(formula, data)                            \n  y <- df[[1]]\n  g <- as.factor(df[[2]])\n  vnames <- names(df)\n  \n  if(sort) g <- reorder(g, y, FUN=median)                           \n  groups <- levels(g)\n  k <- nlevels(g)\n  \n  getstats <- function(x)(c(N = length(x), Median = median(x),      \n                            MAD = mad(x)))\n  sumstats <- t(aggregate(y, by=list(g), FUN=getstats)[2])\n  rownames(sumstats) <- c(\"n\", \"median\", \"mad\")\n  colnames(sumstats) <- groups\n  \n  kw <- kruskal.test(formula, data)                             \n  wmc <- NULL\n  for (i in 1:(k-1)){\n    for (j in (i+1):k){\n      y1 <- y[g==groups[i]]\n      y2 <- y[g==groups[j]] \n      test <- wilcox.test(y1, y2, exact=exact)\n      r <- data.frame(Group.1=groups[i], Group.2=groups[j], \n                      W=test$statistic[[1]], p=test$p.value)\n      # note the [[]] to return a single number\n      wmc <- rbind(wmc, r)\n    }\n  }\n  wmc$p <- p.adjust(wmc$p, method=method)\n  \n  \n  data <- data.frame(y, g)                                    \n  names(data) <- vnames\n  results <- list(CALL = match.call(), \n                  data=data,\n                  sumstats=sumstats, kw=kw, \n                  method=method, wmc=wmc, vnames=vnames)\n  class(results) <- c(\"oneway\", \"list\")\n  return(results)\n}\n\n",
+    "created" : 1443811492736.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2384276196",
+    "id" : "ECE4776D",
+    "lastKnownWriteTime" : 1443448487,
+    "path" : "~/USgov/census.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

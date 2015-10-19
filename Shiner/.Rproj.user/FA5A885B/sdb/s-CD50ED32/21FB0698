@@ -1,0 +1,18 @@
+{
+    "contents" : "library(quantmod)\nlibrary(forecast)\n\ngetSymbols(c(\"T\"))\nATNT <- T\nticker.lm = lm(T.Low ~ lag(T.High) + T.Open + lag(T.Low) + lag(T.Close)   , data = T)\nsummary(ticker.lm)\nsubset(ATNT, row.names(ATNT)>\"2010-1-1\")\nsubset='2007::2008-01'\npredict.lm(ticker.lm)\n\nticker.lm = lm(T.Low ~ lag(T.High) + lag(T.Open) + lag(T.Low) + lag(T.Close)   , data = T)\npredict.lm(ticker.lm)\npredict.lm()\n\nforecast(ticker.lm, h=1, level=90, fan=FALSE, robust=FALSE, lambda=NULL, find.frequency=FALSE, \n         allow.multiplicative.trend=FALSE)\n\nlastday <- T[nrow(T),]\nforecast.lm(ticker.lm, lastday, level=c(80,95))\n\nArima(T)\n",
+    "created" : 1443878962311.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3014567758",
+    "id" : "21FB0698",
+    "lastKnownWriteTime" : 1444334955,
+    "path" : "~/fraud_detection/R/Arima bs.R",
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

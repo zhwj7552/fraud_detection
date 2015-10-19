@@ -1,0 +1,17 @@
+{
+    "contents" : "library(quantmod)\n\n#Building the data frame and xts to show dividends, splits and technical indicators\n\nSymbolsList <- c(\"T\", \"AAPL\")\ngetSymbols(SymbolsList)  #need to improve this line to pull form google\n\nlapply(AMZN, ATNT)\nPlayground <- data.frame(T)\nPlayground$date <- as.Date(row.names(Playground))\nPlayground$wday <- as.POSIXlt(Playground$date)$wday #day of the week\nPlayground$yday <- as.POSIXlt(Playground$date)$mday #day of the month\nPlayground$mon <- as.POSIXlt(Playground$date)$mon #month of the year\nPlayground$RSI <- RSI(Playground$T.Adjusted, n = 5, maType=\"EMA\") #can add Moving Average Type with maType = \nPlayground$MACD <- MACD(T, nFast = 12, nSlow = 26, nSig = 9)\nPlayground <- na.trim(Playground)\n\nfor (i in 1:2){\n  SymbolsList[i] <- getDividends(SymbolsList[i], from = \"2007-01-01\", to = Sys.Date(), src = \"google\", auto.assign = FALSE)\n  }\n  \ngetDividends(SymbolsList, from = \"2007-01-01\", to = Sys.Date(), src = \"google\", auto.assign = FALSE)\ngetSplits(SymbolsList, from = \"2007-01-01\", to = Sys.Date(), src = \"google\", auto.assign = FALSE)\n\n#Problem, this is feeding a two element frame into SellSignal and BuySignal, \n#i wonder if it is individually scoreing RSI and MACD\nPlayground$SellSignal <- ifelse(Playground$RSI > 70 & Playground$MACD > 0, \"Sell\", \"Hold\")\nPlayground$BuySignal <- ifelse(Playground$RSI < 30 & Playground$MACD < 0, \"Buy\", \"Hold\")\nPlayground$Position <- 0\nPlayground$Cash <- 0\nCommission <- 9\n\nfor (i in 2:nrow(Playground)) {\n  if(!is.null(Playground$SellSignal[i-1])){\n    if(Playground$SellSignal[i-1,1]==\"Sell\" & Playground$Position[i-1]==1000){\n      Playground$Cash[i] <- Playground$T.Adjusted[i]*1000-Commission\n      for (y in i:nrow(Playground)) {Playground$Position[y]<-0}\n    }\n  }\n  if(!is.null(Playground$BuySignal[i-1])){\n    if(Playground$BuySignal[i-1,1]==\"Buy\" & Playground$Position[i-1]==0){\n      Playground$Cash[i] <- Playground$T.Adjusted[i]*-1000-Commission\n      for (y in i:nrow(Playground)) {Playground$Position[y]<-1000}\n    }\n  }\n}\nif(Playground$Position[i]==1000){Playground$Cash[i] <- Playground$T.Adjusted[i]*1000} #gets value if holding on last period\nsum(Playground$Cash)  #Strategy Score\nPlayground$T.Adjusted[i] * 1000 - Playground$T.Adjusted[1] * 1000 #Buy and Hold Score\n\n\n",
+    "created" : 1444075255492.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1620228007",
+    "id" : "66243517",
+    "lastKnownWriteTime" : 1444871102,
+    "path" : "~/DVTrading/ConstructStockDataFrame.007.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

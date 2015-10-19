@@ -1,0 +1,25 @@
+{
+    "contents" : "",
+    "created" : 1444075327462.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "F374193",
+    "lastKnownWriteTime" : 90278199296,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "1vg0qo3047",
+        "caption" : "AMZN",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=AMZN&cache_key=1vg0qo3047",
+        "displayedObservations" : 2204,
+        "environment" : "",
+        "object" : "AMZN",
+        "totalObservations" : 2204,
+        "variables" : 6
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}
